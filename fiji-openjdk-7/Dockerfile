@@ -3,7 +3,7 @@
 #
 
 # Pull base JDK-7 image.
-FROM dockerfile/java:openjdk-7-jdk
+FROM openjdk:7
 
 # Define maintainer.
 MAINTAINER Mark Hiner <hinerm@gmail.com>
