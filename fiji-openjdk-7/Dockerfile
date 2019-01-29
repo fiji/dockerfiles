@@ -13,7 +13,7 @@ WORKDIR /fiji
 
 # Install Fiji.
 RUN \
-      curl -O http://update.imagej.net/bootstrap.js && \
+      curl -O https://update.imagej.net/bootstrap.js && \
       jrunscript bootstrap.js update-force-pristine
 
 # Add fiji to the PATH
