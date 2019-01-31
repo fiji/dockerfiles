@@ -3,7 +3,7 @@
 #
 
 # Pull base JDK-7 image.
-FROM dockerfile/java:openjdk-7-jdk
+FROM openjdk:7
 
 # Define maintainer.
 MAINTAINER Mark Hiner <hinerm@gmail.com>
@@ -13,7 +13,7 @@ WORKDIR /fiji
 
 # Install Fiji.
 RUN \
-      curl -O http://update.imagej.net/bootstrap.js && \
+      curl -O https://update.imagej.net/bootstrap.js && \
       jrunscript bootstrap.js update-force-pristine
 
 # Add fiji to the PATH
