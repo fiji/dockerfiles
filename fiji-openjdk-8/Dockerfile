@@ -12,15 +12,15 @@ MAINTAINER Mark Hiner <hinerm@gmail.com>
 WORKDIR /fiji
 
 # Install Fiji.
-# see https://github.com/fiji/fiji-builds/blob/master/.travis/build.sh#L84-L119
-# for details on the double-run
-RUN \
-      curl -O https://downloads.imagej.net/bootstrapJ8.js && \ 
-      jrunscript bootstrap8.js update-force-pristine && \
-      jrunscript bootstrap8.js update-force-pristine
+RUN wget -q https://downloads.imagej.net/fiji/latest/fiji-nojre.zip \
+ && unzip fiji-nojre.zip \
+ && rm fiji-nojre.zip
+RUN wget -O- https://raw.githubusercontent.com/imagej/imagej/master/bin/ImageJ.sh |grep -v PermSize > Fiji.app/ImageJ.sh \
+ && chmod u+x ./Fiji.app/ImageJ.sh
 
 # Add fiji to the PATH
-ENV PATH $PATH:/fiji
+ENV PATH $PATH:/fiji/Fiji.app
 
 # Define default command.
-CMD ["fiji-linux64"]
+ENTRYPOINT ["bash", "ImageJ.sh", "--headless"]
+CMD ["--help"]
