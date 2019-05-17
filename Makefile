@@ -1,3 +1,5 @@
+today = $(shell date +%Y%m%d)
+
 latest = fiji-openjdk-8
 
 images = \
@@ -24,9 +26,13 @@ $(images) : %:
 	cd $@ && docker build -t fiji/fiji:$@ .
 
 release :
-	docker tag fiji/fiji:$(latest) fiji/fiji:latest
-	@for f in $(images); do docker push fiji/fiji:$${f}; done
-	docker push fiji/fiji:latest
+	for f in $(images); do docker tag fiji/fiji:$${f} fiji/fiji:$${f}.$(today); done
+	for f in $(images); do docker push fiji/fiji:$${f}.$(today); done
+	for f in $(images); do docker push fiji/fiji:$${f}; done
+	docker tag fiji/fiji:$(latest) fiji/fiji:latest;
+	docker tag fiji/fiji:$(latest) fiji/fiji:$(today);
+	docker push fiji/fiji:latest;
+	docker push fiji/fiji:$(today);
 
 clean :
 	@for image in $(images); do echo docker rmi fiji/fiji:$${image}; done
