@@ -2,8 +2,7 @@ latest = fiji-openjdk-8
 
 images = \
 $(latest) \
-fiji-openjdk-7 \
-fiji-oracle-jdk8
+fiji-openjdk-7
 
 ## Currently broken:
 ## - fiji-oracle-jdk6
