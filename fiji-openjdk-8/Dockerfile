@@ -8,19 +8,25 @@ FROM openjdk:8
 # Define maintainer.
 MAINTAINER Mark Hiner <hinerm@gmail.com>
 
+# Create a user.
+RUN useradd -u 1000 -ms /bin/bash fiji
+USER fiji
+
 # Define working directory.
-WORKDIR /fiji
+WORKDIR /home/fiji
 
 # Install Fiji.
 RUN wget -q https://downloads.imagej.net/fiji/latest/fiji-nojre.zip \
  && unzip fiji-nojre.zip \
  && rm fiji-nojre.zip
-RUN wget -O- https://raw.githubusercontent.com/imagej/imagej/master/bin/ImageJ.sh |grep -v PermSize > Fiji.app/ImageJ.sh \
- && chmod u+x ./Fiji.app/ImageJ.sh
 
 # Add fiji to the PATH
-ENV PATH $PATH:/fiji/Fiji.app
+ENV PATH $PATH:/home/fiji/Fiji.app
 
-# Define default command.
-ENTRYPOINT ["bash", "ImageJ.sh", "--headless"]
-CMD ["--help"]
+# Define entrypoint.
+COPY entrypoint.sh /home/fiji
+ENTRYPOINT ["./entrypoint.sh"]
+
+# Run once to create Java preferences.
+COPY demo.py /home/fiji/
+RUN ./entrypoint.sh --headless --ij2 --console --run ./demo.py 'name="test"'
