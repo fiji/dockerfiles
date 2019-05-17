@@ -12,9 +12,12 @@ MAINTAINER Mark Hiner <hinerm@gmail.com>
 WORKDIR /fiji
 
 # Install Fiji.
+# see https://github.com/fiji/fiji-builds/blob/master/.travis/build.sh#L84-L119
+# for details on the double-run
 RUN \
-      curl -O https://update.imagej.net/bootstrap.js && \
-      jrunscript bootstrap.js update-force-pristine
+      curl -O https://downloads.imagej.net/bootstrapJ8.js && \ 
+      jrunscript bootstrap8.js update-force-pristine && \
+      jrunscript bootstrap8.js update-force-pristine
 
 # Add fiji to the PATH
 ENV PATH $PATH:/fiji
