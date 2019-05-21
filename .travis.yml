@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+env:
+  - JAVA_VERSION=openjdk-8
+
+script:
+  - docker build -t fiji-$JAVA_VERSION fiji-$JAVA_VERSION
+  - docker run --rm fiji-$JAVA_VERSION --ij2 --console --run ./demo.py 'name="travis"'
