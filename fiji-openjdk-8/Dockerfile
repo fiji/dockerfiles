@@ -6,7 +6,7 @@
 FROM openjdk:8
 
 # Define maintainer.
-MAINTAINER Mark Hiner <hinerm@gmail.com>
+LABEL maintainer="https://gitter.im/fiji/fiji"
 
 # Create a user.
 RUN useradd -u 1000 -ms /bin/bash fiji
