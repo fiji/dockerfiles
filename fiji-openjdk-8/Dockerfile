@@ -28,6 +28,11 @@ ENV PATH $PATH:/opt/fiji/Fiji.app
 COPY --chown=fiji:fiji entrypoint.sh /opt/fiji
 ENTRYPOINT ["./entrypoint.sh"]
 
+# Update URLs use https
+RUN ./entrypoint.sh --update edit-update-site ImageJ https://update.imagej.net/
+RUN ./entrypoint.sh --update edit-update-site Fiji https://update.fiji.sc/
+RUN ./entrypoint.sh --update edit-update-site Java-8 https://sites.imagej.net/Java-8/
+
 # Run once to create Java preferences.
 COPY --chown=fiji:fiji demo.py /opt/fiji/
 RUN ./entrypoint.sh --headless --ij2 --console --run ./demo.py 'name="test"'
