@@ -4,7 +4,8 @@ latest = fiji-openjdk-8
 
 images = \
 $(latest) \
-fiji-openjdk-7
+fiji-openjdk-7 \
+fiji-openjdk-11
 
 ## Currently broken:
 ## - fiji-oracle-jdk6
@@ -15,7 +16,7 @@ fiji-openjdk-7
 ## Must be built on special hardware:
 ## - fiji-oracle-jdk8-arm32v7
 
-all : build
+all : update build
 
 update :
 	@for image in $(images); do (cd $${image}; grep FROM Dockerfile | cut -f2 -d" " | xargs docker pull); done
