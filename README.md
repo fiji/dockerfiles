@@ -14,13 +14,11 @@ https://imagej.net/learn/docker
 
 ### Docker Tags
 
-`fiji/dockerfile` provides multiple tagged images:
+`fiji/fiji` provides multiple tagged images:
 
-* `latest` (default): Fiji with OpenJDK Java 7
-* `fiji-openjdk-6`: Fiji with OpenJDK Java 6
-* `fiji-openjdk-7`: Fiji with OpenJDK Java 7
-* `fiji-oracle-jdk6`: Fiji with Oracle Java 6
-* `fiji-oracle-jdk7`: Fiji with Oracle Java 7
+* `latest` (default): Fiji with OpenJDK Java 8
+* `fiji-openjdk-8`: Fiji with OpenJDK Java 8
+* `fiji-openjdk-11`: Fiji with OpenJDK Java 11
 
 For example, you can run an `Oracle Java 7` container with the following command:
 
