@@ -2,66 +2,69 @@
 
 # Fiji Dockerfile
 
-This repository contains Dockerfile of [Fiji](fiji.sc) for [fiji/fiji on
-DockerHub](https://registry.hub.docker.com/u/fiji/fiji/) as is linked to from
-https://imagej.net/learn/docker
+This repository contains the Dockerfiles for [Fiji](https://fiji.sc), which are
+used to deploy [fiji/fiji on DockerHub](https://hub.docker.com/r/fiji/fiji).
 
 ## Quick start
 
 ### Base Docker Image
 
-* [dockerfile/java](http://dockerfile.github.io/#/java)
+* [openjdk](https://hub.docker.com/_/openjdk)
 
 ### Docker Tags
 
 `fiji/fiji` provides multiple tagged images:
 
-* `latest` (default): Fiji with OpenJDK Java 8
-* `fiji-openjdk-8`: Fiji with OpenJDK Java 8
-* `fiji-openjdk-11`: Fiji with OpenJDK Java 11
+* `latest` (default): Fiji with OpenJDK 8
+* `fiji-openjdk-8`: Fiji with OpenJDK 8
+* `fiji-openjdk-11`: Fiji with OpenJDK 11
 
-For example, you can run an `Oracle Java 7` container with the following command:
+For example, you can run an `OpenJDK 8` container with the following command:
 
-  docker run -it --run fiji/fiji:fiji-oracle-7
+  docker run -it --run fiji/fiji:fiji-openjdk-8
 
 ## Details
 
-[Docker](https://www.docker.com/whatisdocker/) provides a platform for
-distribution of application state. This facilitates the highest level of
-scientific [reproducibility](/develop/architecture#reproducible-builds) - as a
-Docker image can bundle operating system, Java version, update site and plugin
-state, and even sample data. These images can then be reused by remote users
-and scientists worldwide, with no dependency concerns (beyond Docker itself).
+[Docker](https://www.docker.com/resources/what-container/) provides a platform
+for distribution of application state. This facilitates the highest level of
+scientific
+[reproducibility](https://imagej.net/develop/architecture#reproducible-builds):
+a Docker image can bundle operating system, Java version, update site and
+plugin state, and even sample data. These images can then be reused by remote
+users and scientists worldwide, with no dependency concerns beyond Docker
+itself.
 
 ### Pre-Requisites
 
-You will need to [install Docker](https://docs.docker.com/installation/#installation) for your system.
+You will need to [install Docker](https://docs.docker.com/get-docker/)
+for your system.
 
-Instructions for building images from Dockerfiles is available from
-the [official documentation](https://docs.docker.com/reference/builder/).
+Instructions for building images from Dockerfiles is available from the
+[official documentation](https://docs.docker.com/engine/reference/builder/).
 
 ### How to use the Fiji Docker images
 
-The base Fiji images are provided on [Docker Hub](https://registry.hub.docker.com/u/fiji/fiji/).
+The base Fiji images are provided as
+[fiji/fiji on Docker Hub](https://hub.docker.com/r/fiji/fiji).
 These images call the Fiji executable by default. For example:
 
 ```shell
 docker run -it --rm fiji/fiji
 ```
 
-will call the default Fiji image, attempting to open the ImageJ UI with Java 7.
+will call the default Fiji image, attempting to open the Fiji application
+with OpenJDK 8.
 
-Several [tags](https://registry.hub.docker.com/u/fiji/fiji/tags/manage/) are
-provided to run Fiji with different Java versions. For example, if you wanted
-to run with Oracle's Java 6, you would use:
+Several [tags](https://hub.docker.com/r/fiji/fiji/tags) are provided to run
+Fiji with different Java versions. For example, if you wanted to run with
+OpenJDK 11, you would use:
 
 ```shell
-docker run -it --rm fiji/fiji:fiji-oracle-jdk6
+docker run -it --rm fiji/fiji:fiji-openjdk-11
 ```
 
 > :warning: **Without some extra setup, there is no display used by Docker.**
 > So if you just tried one of the above commands, you likely got an error:
->
 > ```
 > No GUI detected.  Falling back to headless mode.
 > ```
@@ -70,9 +73,9 @@ docker run -it --rm fiji/fiji:fiji-oracle-jdk6
 
 ### Running headless
 
-Running ImageJ headlessly in Docker is not much different than normal headless
-operation - see the [headless guide](https://imagej.net/learn/headless) for
-general information. To start a headless ImageJ invocation from Docker, use:
+Running Fiji headlessly in Docker is not much different than normal headless
+operation&mdash;see the [headless guide](https://imagej.net/learn/headless) for
+general information. To start a headless Fiji invocation from Docker, use:
 
 ```shell
 docker run -it --rm fiji/fiji fiji-linux64 --headless
@@ -86,22 +89,26 @@ docker run -it --rm fiji/fiji bash
 ```
 
 Just be sure to [commit any
-changes](https://docs.docker.com/userguide/dockerimages/#updating-and-committing-an-image)!
+changes](https://docs.docker.com/engine/reference/commandline/commit/)!
 
 ### Running the UI
 
 This is, unfortunately, currently quite platform-specific. Docker has tight
 Linux integration, so it is much easier to share displays with a Docker image
-if you are using a Linux host. However, it is not impossible on other architectures.
+if you are using a Linux host. However, it is not impossible on other
+architectures.
 
-Note that this is highly experimental right now, and the steps to get Fiji running can be fairly involved. Please
-[report issues](https://github.com/fiji/dockerfiles/issues) and contribute suggestions
-if you have ideas for improving interoperability between Fiji's UI and Docker.
+Note that this is highly experimental right now, and the steps to get Fiji
+running can be fairly involved. Please
+[report issues](https://github.com/fiji/dockerfiles/issues) and contribute
+suggestions if you have ideas for improving interoperability between Fiji's UI
+and Docker.
 
 #### On Linux
 
-We can adapt [this blog post](http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/)
-on running GUI applications with Docker to share the X11 port.
+We can adapt
+[this blog post](http://fabiorehm.com/blog/2014/09/11/running-gui-apps-with-docker/) on
+running GUI applications with Docker to share the X11 port.
 
 Use this Dockerfile as a starting point:
 
@@ -122,6 +129,7 @@ CMD fiji-linux64
 ```
 
 Install the Dockerfile with:
+
 ```shell
 docker build -t fiji .
 ```
@@ -139,7 +147,7 @@ Which should pop up a window with Fiji running.
 
 #### On macOS
 
-#### boot2docker
+##### boot2docker
 
 To get a GUI application running on macOS, we can adapt the techniques
 discussed in [this docker issue](https://github.com/docker/docker/issues/8710)
@@ -147,10 +155,12 @@ to run an X11 session, and share it with Docker.
 
 First, you will need to install the following:
 
-1.  [Homebrew](http://brew.sh/)
+1.  [Homebrew](https://brew.sh/)
 2.  [Homebrew-cask](https://github.com/caskroom/homebrew-cask)
 
-Then, from a terminal, use Homebrew to install [socat](http://www.cyberciti.biz/faq/linux-unix-tcp-port-forwarding/) and [XQuartz](http://xquartz.macosforge.org/landing/) via:
+Then, from a terminal, use Homebrew to install
+[socat](https://www.cyberciti.biz/faq/linux-unix-tcp-port-forwarding/) and
+[XQuartz](https://www.xquartz.org/) via:
 ```shell
 brew install socat
 brew cask install xquartz
@@ -177,7 +187,7 @@ inet 192.168.15.2 netmask 0xffffffff broadcast 192.168.0.0
 And take note of the ip address on the last line (`192.168.15.2` in this case).
 
 Since you are using macOS it is assumed you are using
-[boot2docker](http://boot2docker.io/). Now, in the same terminal you started
+[boot2docker](https://boot2docker.io/). Now, in the same terminal you started
 boot2docker, you should have set up the environment variables e.g. with
 
 ```shell
@@ -208,20 +218,19 @@ Where the IP address was what we found earlier with `ifconfig`.
 
 Congratulations! You should now be running Fiji in a Docker image.
 
-#### Kitematic
+##### Docker Desktop
 
-[Kitematic](https://kitematic.com/) is a UI-oriented way to start Docker
-containers on Macs. It makes it very easy to download and run new images.
-However we have not yet investigated how to run the Fiji UI with Kitematic.
+[Docker Desktop](https://www.docker.com/products/docker-desktop/) is a
+UI-oriented way to start Docker containers. It makes it very easy to download
+and run new images. However, we have not yet investigated how to run the Fiji
+UI with Docker Desktop.
 
 ### Exposing your data
 
 Once you have Fiji up and running, you will probably want to open some images.
 
-The best way to share data with Docker is to use volumes, as described in
-[this blog post](http://haven.nightlyart.com/fiji-is-now-available-on-docker-hub/).
-
-For example, if your data is in `/Users/foo/data`, launching the Fiji image with:
+The best way to share data with Docker is to use volumes. For example, if your
+data is in `/Users/foo/data`, launching the Fiji image with:
 
 ```shell
 docker run -v /Users/foo/data:/fiji/data -e DISPLAY=192.168.15.2:0 fiji/fiji
@@ -231,7 +240,7 @@ will create a `data` subdirectory in the Fiji installation, which you can then
 open images from as normal.
 
 For more information on using volumes, see the
-[Docker user guide](https://docs.docker.com/userguide/dockervolumes/).
+[Docker user guide](https://docs.docker.com/storage/volumes/).
 
 ### Docker image structure
 
@@ -241,7 +250,7 @@ default command).
 
 ### Troubleshooting
 
-If you run into any problems or have questions about ImageJ + Docker, please use:
+If you run into any problems or have questions about Fiji + Docker, please use:
 
 -   [GitHub](https://github.com/fiji/dockerfiles/issues)
--   [Image.sc](https://forum.image.sc/)
+-   [Image.sc](https://forum.image.sc/) - use the `fiji` and `docker` tags
