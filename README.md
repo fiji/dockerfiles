@@ -1,4 +1,4 @@
-![Docker Hub pulls](https://img.shields.io/docker/pulls/fiji/fiji.svg)
+[![Docker Hub pulls](https://img.shields.io/docker/pulls/fiji/fiji.svg)](https://hub.docker.com/r/fiji/fiji)
 
 # Fiji Dockerfile
 
